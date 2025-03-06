@@ -46,6 +46,3 @@ cat ~/.ssh/authorized_keys
 # user: admin, pass: admin
 # test upload image
 ```
-TODO
-- test tf apply on ec2: try diff region
-- remove cloud-computing.pem

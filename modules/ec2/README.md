@@ -80,4 +80,18 @@ ssh-keygen -t ed25519 -f ./test
 ssh -i "~/.ssh/test" ubuntu@ec2-54-255-161-156.ap-southeast-1.compute.amazonaws.com
 cat ~/.ssh/id_rsa | pbcopy
 ssh -i test2 ubuntu@10.0.3.100
+
+# github ssh
+ssh-keygen -t rsa -b 4096 -C "your-email@example.com" -f ~/.ssh/your-key-name
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/your-key-name
+cat ~/.ssh/your-key-name.pub
+
+nano ~/.ssh/config
+# Host github.com
+#     HostName github.com
+#     IdentityFile ~/.ssh/your-key-name
+#     IdentitiesOnly yes
+
+ssh -T git@github.com
 ```
