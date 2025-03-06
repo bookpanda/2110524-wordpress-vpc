@@ -34,22 +34,6 @@ resource "aws_s3_bucket_acl" "example" {
   acl    = "public-read"
 }
 
-resource "aws_s3_bucket_policy" "wordpress_uploads_policy" {
-  bucket = aws_s3_bucket.wordpress_uploads.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Sid       = "PublicReadGetObject"
-        Effect    = "Allow"
-        Principal = "*"
-        Action    = "s3:GetObject"
-        Resource  = "arn:aws:s3:::${aws_s3_bucket.wordpress_uploads.bucket}/*"
-      }
-    ]
-  })
-}
-
 resource "aws_iam_policy" "wordpress_s3_policy" {
   name        = "wordpress-s3-policy"
   description = "Policy to allow WordPress EC2 instance to access S3 for file uploads"
