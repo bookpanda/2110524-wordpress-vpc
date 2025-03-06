@@ -1,8 +1,6 @@
 resource "aws_s3_bucket" "wordpress_uploads" {
   bucket        = var.bucket_name
   force_destroy = true
-  acl           = "public-read"
-
   tags = {
     Name        = "wordpress-uploads"
     Environment = "Production"
@@ -15,6 +13,25 @@ resource "aws_s3_bucket_ownership_controls" "wordpress_uploads" {
   rule {
     object_ownership = "ObjectWriter"
   }
+}
+
+resource "aws_s3_bucket_public_access_block" "wordpress_uploads" {
+  bucket = aws_s3_bucket.wordpress_uploads.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_acl" "example" {
+  depends_on = [
+    aws_s3_bucket_ownership_controls.wordpress_uploads,
+    aws_s3_bucket_public_access_block.wordpress_uploads,
+  ]
+
+  bucket = aws_s3_bucket.wordpress_uploads.id
+  acl    = "public-read"
 }
 
 resource "aws_s3_bucket_policy" "wordpress_uploads_policy" {
