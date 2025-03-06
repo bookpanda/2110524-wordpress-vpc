@@ -37,6 +37,10 @@ terraform init
 terraform plan
 terraform apply
 terraform destroy
+
+# on mac (must have graphviz)
+terraform graph -type=plan tfplan
+terraform show -json tfplan | terraform graph -type=plan | dot -Tpng -o plan.png
 ```
 
 # Flow
