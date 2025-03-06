@@ -7,12 +7,29 @@
 - name: terraform-test
 - policies: AmazonEC2FullAccess, AmazonS3FullAccess, IAMFullAccess
 ```bash
-ssh -i "cloud-computing.pem" ec2-user@ec2-13-215-193-114.ap-southeast-1.compute.amazonaws.com
+ssh -i "cloud-computing.pem" ec2-user@ec2-52-221-239-236.ap-southeast-1.compute.amazonaws.com
 
 sudo yum install -y yum-utils 
 sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 sudo yum -y install terraform git
-terraform -version 
+terraform -version
+
+# on mac
+cat ~/.ssh/cloud-course-github | pbcopy
+
+# back to ec2
+sudo nano ~/.ssh/cloud-course-github
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/cloud-course-github
+
+sudo nano ~/.ssh/config
+Host github.com
+    HostName github.com
+    IdentityFile ~/.ssh/cloud-course-github
+    IdentitiesOnly yes
+
+ssh -T git@github.com
+git clone git@github.com:bookpanda/2110524-wordpress-vpc.git
 ```
 
 ```bash
